@@ -70,7 +70,18 @@
         </div>
         
         <div class="features-grid">
-            <div class="features-data-flow"></div>
+            <!-- Animated Flow Connectors -->
+            <svg class="feature-connections-svg" viewBox="0 0 1000 10" preserveAspectRatio="none">
+                <!-- Base Tracks -->
+                <path d="M 125 5 L 375 5" class="fc-line" />
+                <path d="M 375 5 L 625 5" class="fc-line" />
+                <path d="M 625 5 L 875 5" class="fc-line" />
+                
+                <!-- Animated Packets -->
+                <path d="M 125 5 L 375 5" class="fc-anim line-1" />
+                <path d="M 375 5 L 625 5" class="fc-anim line-2" />
+                <path d="M 625 5 L 875 5" class="fc-anim line-3" />
+            </svg>
             <!-- Card 1 -->
             <div class="feature-card glass fade-in-up delay-1">
                 <div class="card-bg-animation"></div>
@@ -126,6 +137,149 @@
                 </div>
                 <h3 class="card-title">Flujos Visuales</h3>
                 <p class="card-desc">Diseña workflows visuales con nodos interactivos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase / Demo Section -->
+    <section class="showcase" id="showcase">
+        <div class="showcase-content">
+            <!-- Left Side: Text and Steps -->
+            <div class="showcase-text fade-in-up">
+                <h2 class="showcase-title">Cómo funciona FlowAI</h2>
+                <p class="showcase-subtitle">Descubre cómo automatizar procesos complejos en minutos y transformar tu forma de trabajar con inteligencia artificial.</p>
+                
+                <div class="showcase-steps">
+                    <div class="step-item fade-in-up delay-1">
+                        <div class="step-icon glow-blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        </div>
+                        <span class="step-text"><strong>1.</strong> Conecta tus herramientas</span>
+                    </div>
+                    <div class="step-item fade-in-up delay-2">
+                        <div class="step-icon glow-purple">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </div>
+                        <span class="step-text"><strong>2.</strong> Diseña flujos inteligentes</span>
+                    </div>
+                    <div class="step-item fade-in-up delay-3">
+                        <div class="step-icon glow-green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                        </div>
+                        <span class="step-text"><strong>3.</strong> Automatiza y escala sin esfuerzo</span>
+                    </div>
+                </div>
+                
+                <div class="showcase-value-points fade-in-up delay-4">
+                    <div class="value-point">
+                        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Automatización inteligente en tiempo real
+                    </div>
+                    <div class="value-point">
+                        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Integración fluida con tus herramientas
+                    </div>
+                    <div class="value-point">
+                        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Optimización continua con IA
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Visual Showcase -->
+            <div class="showcase-visual fade-in-up delay-2" id="showcase-visual-wrapper">
+                <div class="showcase-dashboard glass" id="showcase-dashboard">
+                    <div class="dashboard-header">
+                        <div class="window-controls">
+                            <span class="dot close"></span>
+                            <span class="dot minimize"></span>
+                            <span class="dot expand"></span>
+                        </div>
+                        <div class="dashboard-title">FlowAI Workflow Editor</div>
+                    </div>
+                    
+                    <div class="dashboard-body">
+                        <div class="dashboard-grid-bg"></div>
+                        
+                        <svg class="workflow-connections" viewBox="0 0 800 500" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#00bfff" stop-opacity="0.2"/>
+                                    <stop offset="50%" stop-color="#8a2be2" stop-opacity="0.8"/>
+                                    <stop offset="100%" stop-color="#8a2be2" stop-opacity="0.2"/>
+                                </linearGradient>
+                                <linearGradient id="lineGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#8a2be2" stop-opacity="0.2"/>
+                                    <stop offset="50%" stop-color="#00ffcc" stop-opacity="0.8"/>
+                                    <stop offset="100%" stop-color="#00ffcc" stop-opacity="0.2"/>
+                                </linearGradient>
+                                <!-- Dash animation requires solid stroke with glowing effect usually, using flat colors for paths works best -->
+                            </defs>
+                            <!-- Paths with glowing dash offset applied in CSS -->
+                            <!-- DATA (X: 15% -> ~120px) to AI CORE (X: 50% -> ~400px) -->
+                            <path class="flow-path path-base" d="M 190 150 C 270 150, 300 250, 340 250" />
+                            <path class="flow-path path-anim" d="M 190 150 C 270 150, 300 250, 340 250" stroke="url(#lineGrad1)"/>
+                            
+                            <!-- API (X: 15% -> ~120px) to AI CORE -->
+                            <path class="flow-path path-base" d="M 190 350 C 270 350, 300 250, 340 250" />
+                            <path class="flow-path path-anim delay-1" d="M 190 350 C 270 350, 300 250, 340 250" stroke="url(#lineGrad1)"/>
+                            
+                            <!-- AI CORE to AUTOMATION (X: 85% -> ~680px) -->
+                            <path class="flow-path path-base" d="M 460 250 C 510 250, 520 150, 600 150" />
+                            <path class="flow-path path-anim delay-2" d="M 460 250 C 510 250, 520 150, 600 150" stroke="url(#lineGrad2)"/>
+                            
+                            <!-- AI CORE to OUTPUT (X: 85% -> ~680px) -->
+                            <path class="flow-path path-base" d="M 460 250 C 510 250, 520 350, 600 350" />
+                            <path class="flow-path path-anim delay-3" d="M 460 250 C 510 250, 520 350, 600 350" stroke="url(#lineGrad2)"/>
+                        </svg>
+
+                        <!-- Input Nodes (Moved to 15% for more visual breathing room) -->
+                        <div class="wf-node input-node glow-border-blue" style="top: 30%; left: 15%;">
+                            <div class="node-icon">📊</div><span class="node-name">DATA</span>
+                            <div class="node-port out"></div>
+                            <div class="node-glow-bg"></div>
+                        </div>
+                        <div class="wf-node input-node glow-border-cyan" style="top: 70%; left: 15%;">
+                            <div class="node-icon">🔗</div><span class="node-name">API WEBHOOK</span>
+                            <div class="node-port out"></div>
+                            <div class="node-glow-bg"></div>
+                        </div>
+                        
+                        <!-- Core Node -->
+                        <div class="wf-node core-node glow-border-purple" style="top: 50%; left: 50%;">
+                            <div class="node-port in"></div>
+                            <div class="node-icon pulse">🧠</div><span class="node-name">AI CORE</span>
+                            <div class="node-port out"></div>
+                            <div class="node-glow-bg"></div>
+                        </div>
+
+                        <!-- Output Nodes (Moved to 85% for more visual breathing room) -->
+                        <div class="wf-node output-node glow-border-green" style="top: 30%; left: 85%;">
+                            <div class="node-port in"></div>
+                            <div class="node-icon">⚡</div><span class="node-name">AUTOMATION</span>
+                            <div class="node-glow-bg"></div>
+                        </div>
+                        <div class="wf-node output-node glow-border-blue" style="top: 70%; left: 85%;">
+                            <div class="node-port in"></div>
+                            <div class="node-icon">📨</div><span class="node-name">OUTPUT</span>
+                            <div class="node-glow-bg"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Value Labels -->
+                <div class="value-label glass float-1" style="top: -5%; right: 10%;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Ahorra tiempo
+                </div>
+                <div class="value-label glass float-2" style="bottom: 15%; left: -5%;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    Reduce errores
+                </div>
+                <div class="value-label glass float-3" style="bottom: -5%; right: -5%;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                    Automatización total
+                </div>
             </div>
         </div>
     </section>

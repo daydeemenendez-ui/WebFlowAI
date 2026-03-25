@@ -256,4 +256,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initParticles();
     animateParticles();
+
+    // --- 3. Showcase Dashboard Parallax ---
+    const showcaseWrapper = document.getElementById('showcase-visual-wrapper');
+    const showcaseDashboard = document.getElementById('showcase-dashboard');
+    const valueLabels = document.querySelectorAll('.value-label');
+
+    if (showcaseWrapper && showcaseDashboard) {
+        let scBounds;
+        const updateScBounds = () => { scBounds = showcaseWrapper.getBoundingClientRect(); };
+        window.addEventListener('resize', updateScBounds);
+        updateScBounds();
+
+        showcaseWrapper.addEventListener('mousemove', (e) => {
+            if (!scBounds) return;
+            // Center calculations
+            const mouseX = e.clientX - scBounds.left;
+            const mouseY = e.clientY - scBounds.top;
+            const centerX = scBounds.width / 2;
+            const centerY = scBounds.height / 2;
+            
+            // Normalize values from -1 to 1
+            const factorX = (mouseX - centerX) / centerX;
+            const factorY = (mouseY - centerY) / centerY;
+            
+            // Max rotation limits
+            const rotX = -(factorY * 6); // Up to 6deg
+            const rotY = (factorX * 6); // Up to 6deg
+            
+            // Apply 3D transform to dashboard
+            showcaseDashboard.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(10px)`;
+            
+            // Subtle counter parallax on floating labels
+            valueLabels.forEach((label, i) => {
+                const depth = (i + 1) * 8;
+                label.style.transform = `translate3d(${factorX * -depth}px, ${factorY * -depth}px, ${depth}px)`;
+            });
+        });
+
+        // Reset on leave
+        showcaseWrapper.addEventListener('mouseleave', () => {
+            showcaseDashboard.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            showcaseDashboard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+            
+            valueLabels.forEach(label => {
+                label.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                label.style.transform = 'translate3d(0, 0, 0)';
+            });
+            
+            // Remove transition to restore smooth tracking
+            setTimeout(() => {
+                showcaseDashboard.style.transition = 'none';
+                valueLabels.forEach(label => label.style.transition = 'none');
+            }, 500);
+        });
+    }
 });
