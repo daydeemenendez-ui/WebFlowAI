@@ -1070,3 +1070,252 @@ body {
     .node-name { font-size: 0.65rem; }
     .node-icon { font-size: 0.9rem; }
 }
+
+/* --- Video Section --- */
+.video-section {
+    position: relative;
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 6rem 0;
+    margin-top: 4rem;
+}
+
+.bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Scale up by 5% to cleanly hide the blue recording border and red square */
+    transform: translate(-50%, -50%) scale(1.05);
+    z-index: 1;
+    will-change: transform, opacity;
+    pointer-events: none;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.bg-video.primary { opacity: 1; }
+.bg-video.secondary { opacity: 0; }
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    /* Increased to 60% opacity for cinematic text contrast, keeping neon readable */
+    background: rgba(3, 3, 5, 0.6); 
+    z-index: 2;
+}
+
+.video-content-wrapper {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 60vh;
+}
+
+.video-text-center {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.video-main-text {
+    font-size: clamp(3rem, 6vw, 6.5rem);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    color: #ffffff;
+    text-transform: lowercase;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    text-shadow: 0 15px 40px rgba(0,0,0,0.9);
+}
+
+.video-main-text .slash {
+    color: var(--accent-blue);
+    font-weight: 300;
+    margin: 0 0.15em;
+    opacity: 0.9;
+    text-shadow: 0 0 25px rgba(0, 191, 255, 0.6);
+}
+
+.video-main-text .italic {
+    font-style: italic;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.6) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Prevents the slant of the final italic 's' from being clipped by the background-box */
+    padding-right: 0.15em; 
+    display: inline-block;
+}
+
+.video-widgets-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-top: 5rem;
+    gap: 3rem;
+}
+
+.widget-glass {
+    background: linear-gradient(135deg, rgba(20, 20, 30, 0.6) 0%, rgba(5, 5, 10, 0.8) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    width: 400px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.15);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.widget-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2rem;
+}
+
+.live-dot {
+    width: 8px; height: 8px;
+    background: #ff3b3b;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ff3b3b;
+    animation: pulseRed 1.5s infinite alternate;
+}
+
+@keyframes pulseRed {
+    0% { opacity: 0.5; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+.metrics-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.metric {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 1rem;
+}
+.metric:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: #fff;
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+}
+
+.avatars-container {
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.avatar, .avatar-more {
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-weight: 700; font-size: 0.9rem; color: #fff;
+    border: 2px solid rgba(20,20,30,0.8);
+    margin-right: -12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.avatar.bg-blue { background: var(--accent-blue); color: #000; }
+.avatar.bg-purple { background: var(--accent-purple); }
+.avatar.bg-green { background: var(--accent-green); color: #000; }
+.avatar-more { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+
+.progress-container {
+    margin-bottom: 1rem;
+}
+
+.progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.85rem; color: rgba(255,255,255,0.7);
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-bg {
+    width: 100%; height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%; width: 92%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    border-radius: 3px;
+    box-shadow: 0 0 10px var(--accent-purple);
+    animation: progressLoad 2s ease-out forwards;
+}
+
+@keyframes progressLoad {
+    from { width: 0%; }
+    to { width: 92%; }
+}
+
+.btn-full { display: block; }
+
+/* In viewport animations */
+.slide-in-left {
+    opacity: 0; transform: translateX(-50px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.slide-in-right {
+    opacity: 0; transform: translateX(50px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.widget-visible.slide-in-left, .widget-visible.slide-in-right {
+    opacity: 1; transform: translateX(0);
+}
+
+/* Responsive constraints */
+@media (max-width: 992px) {
+    .video-widgets-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+    }
+    .widget-glass {
+        width: 100%; max-width: 450px;
+    }
+}
+@media (max-width: 768px) {
+    .video-main-text {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+}
+
