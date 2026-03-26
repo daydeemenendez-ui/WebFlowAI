@@ -1096,11 +1096,15 @@ body {
     z-index: 1;
     will-change: transform, opacity;
     pointer-events: none;
-    transition: opacity 1.5s ease-in-out;
+    /* Start completely hidden for smooth scroll-in reveal */
+    opacity: 0; 
+    transition: opacity 2.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.bg-video.primary { opacity: 1; }
-.bg-video.secondary { opacity: 0; }
+.bg-video.is-playing {
+    /* Slowly revealed cinematically as video plays */
+    opacity: 1;
+}
 
 .video-overlay {
     position: absolute;
