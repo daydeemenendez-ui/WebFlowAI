@@ -311,4 +311,88 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         });
     }
+
+    // --- 4. Video Section Animations ---
+    const widgets = document.querySelectorAll('.slide-in-left, .slide-in-right');
+    if (widgets.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('widget-visible');
+                    
+                    // Increment counter logic for workflows if this is the left widget
+                    const counter = entry.target.querySelector('#workflows-count');
+                    if (counter && !counter.dataset.animated) {
+                        counter.dataset.animated = "true";
+                        let count = 13800; // Start a bit lower
+                        const target = 14208;
+                        const interval = setInterval(() => {
+                            count += Math.floor(Math.random() * 5) + 1;
+                            if (count >= target) {
+                                count = target;
+                                clearInterval(interval);
+                            }
+                            counter.innerText = count.toLocaleString();
+                        }, 30);
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        widgets.forEach(widget => observer.observe(widget));
+    }
+
+    // --- 5. Cinematic SaaS Dual-Video Crossfade Loop Manager ---
+    const vid1 = document.querySelector('.bg-video.primary');
+    const vid2 = document.querySelector('.bg-video.secondary');
+    
+    if (vid1 && vid2) {
+        const INTRO_START = 1.2; 
+        const END_LOOP_DURATION = 3.5; 
+        const CROSSFADE_DURATION = 1.0; // 1-second buttery smooth CSS crossfade
+        
+        let loopEnd = -1;
+        let loopStart = -1;
+        let activeVideo = vid1;
+        let nextVideo = vid2;
+        let isCrossfading = false;
+
+        vid1.addEventListener('loadedmetadata', () => {
+            if (loopEnd !== -1) return; // Prevent double trigger
+            
+            vid1.currentTime = INTRO_START;
+            loopEnd = vid1.duration - 0.3; 
+            loopStart = loopEnd - END_LOOP_DURATION;
+            
+            vid2.currentTime = loopStart;
+            vid1.play().catch(console.error);
+            
+            // Start precision loop tracker
+            requestAnimationFrame(trackPlayback);
+        });
+
+        function trackPlayback() {
+            if (!isCrossfading && activeVideo.currentTime >= (loopEnd - CROSSFADE_DURATION)) {
+                isCrossfading = true;
+                
+                nextVideo.currentTime = loopStart;
+                nextVideo.play().catch(console.error);
+                
+                // Trigger CSS crossfade transition
+                nextVideo.style.opacity = '1';
+                activeVideo.style.opacity = '0';
+                
+                setTimeout(() => {
+                    activeVideo.pause();
+                    // Swap references for next cycle
+                    const temp = activeVideo;
+                    activeVideo = nextVideo;
+                    nextVideo = temp;
+                    isCrossfading = false;
+                }, CROSSFADE_DURATION * 1000);
+            }
+            requestAnimationFrame(trackPlayback);
+        }
+    }
+
 });
