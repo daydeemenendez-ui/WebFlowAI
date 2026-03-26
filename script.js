@@ -342,57 +342,45 @@ document.addEventListener('DOMContentLoaded', () => {
         widgets.forEach(widget => observer.observe(widget));
     }
 
-    // --- 5. Cinematic SaaS Dual-Video Crossfade Loop Manager ---
-    const vid1 = document.querySelector('.bg-video.primary');
-    const vid2 = document.querySelector('.bg-video.secondary');
+    // --- 5. Scroll-Activated Single-Play Video ---
+    const bgVideo = document.getElementById('bgVidHero');
+    const videoSection = document.getElementById('hero-video-section');
     
-    if (vid1 && vid2) {
+    if (bgVideo && videoSection) {
+        // Trim settings
         const INTRO_START = 1.2; 
-        const END_LOOP_DURATION = 3.5; 
-        const CROSSFADE_DURATION = 1.0; // 1-second buttery smooth CSS crossfade
+        let videoEnded = false;
+        let playEnd = Infinity;
         
-        let loopEnd = -1;
-        let loopStart = -1;
-        let activeVideo = vid1;
-        let nextVideo = vid2;
-        let isCrossfading = false;
-
-        vid1.addEventListener('loadedmetadata', () => {
-            if (loopEnd !== -1) return; // Prevent double trigger
-            
-            vid1.currentTime = INTRO_START;
-            loopEnd = vid1.duration - 0.3; 
-            loopStart = loopEnd - END_LOOP_DURATION;
-            
-            vid2.currentTime = loopStart;
-            vid1.play().catch(console.error);
-            
-            // Start precision loop tracker
-            requestAnimationFrame(trackPlayback);
+        bgVideo.addEventListener('loadedmetadata', () => {
+            bgVideo.currentTime = INTRO_START;
+            playEnd = bgVideo.duration - 0.3; // Stop exactly before recording UI freeze
         });
 
-        function trackPlayback() {
-            if (!isCrossfading && activeVideo.currentTime >= (loopEnd - CROSSFADE_DURATION)) {
-                isCrossfading = true;
-                
-                nextVideo.currentTime = loopStart;
-                nextVideo.play().catch(console.error);
-                
-                // Trigger CSS crossfade transition
-                nextVideo.style.opacity = '1';
-                activeVideo.style.opacity = '0';
-                
-                setTimeout(() => {
-                    activeVideo.pause();
-                    // Swap references for next cycle
-                    const temp = activeVideo;
-                    activeVideo = nextVideo;
-                    nextVideo = temp;
-                    isCrossfading = false;
-                }, CROSSFADE_DURATION * 1000);
+        // Watch the time to freeze securely at the final frame
+        bgVideo.addEventListener('timeupdate', () => {
+            if (!videoEnded && bgVideo.currentTime >= playEnd && playEnd > 0) {
+                videoEnded = true;
+                bgVideo.pause(); // Freeze exactly on the beautiful final frame
             }
-            requestAnimationFrame(trackPlayback);
-        }
+        });
+
+        // Scroll observer to play/pause intelligently
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!videoEnded) {
+                        bgVideo.play().catch(console.error);
+                        // Trigger smooth CSS fade-in
+                        bgVideo.classList.add('is-playing');
+                    }
+                } else {
+                    bgVideo.pause(); // Suspend playback to save browser CPU
+                }
+            });
+        }, { threshold: 0.65 }); // Start playing ONLY when 65% of the section is scrolled into view
+
+        videoObserver.observe(videoSection);
     }
 
 });
