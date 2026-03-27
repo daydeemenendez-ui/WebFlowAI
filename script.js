@@ -1,75 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. 3D Parallax Logic (Laptop & Overlay) ---
+    // --- 1. Static 3D Positioning (Laptop & Overlay) ---
     const img = document.getElementById('laptop-img');
     const overlay = document.getElementById('dashboard-overlay');
     const hero = document.querySelector('.hero');
     
-    let targetRotateX = 0;
-    let targetRotateY = -5; // Base resting angle mapped to image
-    let targetScale = 1;
-    let targetTransX = 0;
-    let targetTransY = 0;
-
-    let currentRotateX = 0;
-    let currentRotateY = -15; // Start offset geometry for entrance
-    let currentScale = 0.9;
-    let currentTransX = 0;
-    let currentTransY = 0;
-
-    const lerp = (start, end, factor) => start + (end - start) * factor;
-
-    setTimeout(() => {
-        targetRotateY = -5;
-        targetRotateX = 0;
-        targetScale = 1;
-    }, 100);
-
-    const renderLoop = () => {
-        currentRotateX = lerp(currentRotateX, targetRotateX, 0.04);
-        currentRotateY = lerp(currentRotateY, targetRotateY, 0.04);
-        currentScale = lerp(currentScale, targetScale, 0.04);
-        currentTransX = lerp(currentTransX, targetTransX, 0.04);
-        currentTransY = lerp(currentTransY, targetTransY, 0.04);
-        
-        const transformStr = `perspective(1200px) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg) translate3d(${currentTransX}px, ${currentTransY}px, 0) scale(${currentScale})`;
-        
-        if(img) img.style.transform = transformStr;
-        if(overlay) overlay.style.transform = transformStr;
-        
-        requestAnimationFrame(renderLoop);
-    };
-    renderLoop();
-
-    let bounds;
-    const updateBounds = () => { bounds = hero.getBoundingClientRect(); };
-    window.addEventListener('resize', updateBounds);
-    updateBounds();
-
-    hero.addEventListener('mousemove', (e) => {
-        if (!bounds) return;
-        const mouseX = e.clientX - bounds.left;
-        const mouseY = e.clientY - bounds.top;
-        const centerX = bounds.width / 2;
-        const centerY = bounds.height / 2;
-        
-        const factorX = (mouseX - centerX) / centerX;
-        targetRotateY = -5 + (factorX * 2);
-        
-        const factorY = (mouseY - centerY) / centerY;
-        targetRotateX = -(factorY * 2);
-        targetScale = 1.03;
-
-        targetTransX = factorX * -10;
-        targetTransY = factorY * -10;
-    });
-
-    hero.addEventListener('mouseleave', () => {
-        targetRotateX = 0;
-        targetRotateY = -5;
-        targetScale = 1;
-        targetTransX = 0;
-        targetTransY = 0;
-    });
+    // Apply the clean static layout transform exactly once
+    const transformStr = `perspective(1200px) rotateX(0deg) rotateY(-5deg) translate3d(0, 0, 0) scale(1)`;
+    
+    if (img) img.style.transform = transformStr;
+    if (overlay) overlay.style.transform = transformStr;
 
     // --- 2. Interactive HTML5 Canvas Particle Engine ---
     const canvas = document.getElementById('particle-canvas');
@@ -90,11 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
         initParticles();
     });
 
+    let bounds;
+    const updateBounds = () => { bounds = hero.getBoundingClientRect(); };
+    window.addEventListener('resize', updateBounds);
+    updateBounds();
+
     // Mouse pointer interactive state
     const pointer = {
         x: null,
         y: null,
-        radius: 120 // Subtle interaction radius
+        radius: 200 // Increased subtle interaction radius
     };
 
     // Listeners for pointer movement (Desktop & Touch)
@@ -136,13 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
             this.z = Math.random(); 
             
             // Flow leftward speed (near particles move noticeably faster)
-            this.baseSpeedX = (Math.random() * 0.2 + 0.1) * (1 + this.z * 1.5);
+            this.baseSpeedX = (Math.random() * 0.35 + 0.15) * (1 + this.z * 1.5);
             // Drift vertically very slowly
-            this.baseSpeedY = (Math.random() - 0.5) * 0.1;
+            this.baseSpeedY = (Math.random() - 0.5) * 0.15;
             
-            // Physics variables
-            this.friction = 0.94; 
-            this.springFactor = 0.015; 
+            // Physics variables - Tuned for dynamic but fluid snapback
+            this.friction = 0.92; 
+            this.springFactor = 0.02; 
             
             // Visual Design Logic
             // 70% dark carbon fragments, 30% glowing data nodes
@@ -161,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Organic autonomous flow 
             this.angle = Math.random() * Math.PI * 2;
-            this.orbitSpeed = Math.random() * 0.01 + 0.002;
+            this.orbitSpeed = Math.random() * 0.015 + 0.003;
             this.orbitRadius = Math.random() * 15 + 5; 
         }
 
@@ -186,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     let dirX = dx / distance;
                     let dirY = dy / distance;
                     
-                    // Repel softly (closer particles get repelled more strongly due to parallax depth)
-                    let depthForce = force * 0.8 * (1 + this.z);
+                    // Repel dynamically (closer particles react more strongly)
+                    let depthForce = force * 1.8 * (1 + this.z);
                     this.vx -= dirX * depthForce;
                     this.vy -= dirY * depthForce;
                 }
@@ -201,8 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
             this.vx *= this.friction;
             this.vy *= this.friction;
 
-            // Limit maximum velocity for controlled cinematic feel
-            const maxV = 2.5;
+            // Limit maximum velocity to allow visible dispersion while retaining control
+            const maxV = 6.0;
             if (this.vx > maxV) this.vx = maxV;
             if (this.vx < -maxV) this.vx = -maxV;
             if (this.vy > maxV) this.vy = maxV;
